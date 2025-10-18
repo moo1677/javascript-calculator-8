@@ -19,23 +19,7 @@ class App {
       const result = calculator(str);
       Console.print(`결과 : ${result}`);
     } catch (error) {
-      if (error.message === "1") {
-        Console.print("숫자 입력 필드가 구분자로 시작하거나 끝날 수 없습니다.");
-      }
-      if (error.message === "2") {
-        Console.print("양수만 입력 가능합니다.");
-      }
-      if (error.message === "3") {
-        Console.print("구분자가 아닌 다른 문자는 사용할 수 없습니다.");
-      }
-      if (error.message === "4") {
-        Console.print(
-          "커스텀 구분자에는 기본구분자 또는 공백이 들어갈 수 없습니다."
-        );
-      }
-      if (error.message === "5") {
-        Console.print("커스텀 구분자 형식에 맞게 작성해주세요");
-      }
+      Console.print(`[ERROR] ${error.message}`);
       throw new Error("[ERROR]");
     }
   }
@@ -60,19 +44,23 @@ function calculator(str) {
     const customDelimiters = customStr[1];
     numbersPart = customStr[2];
     //커스텀 구분자에 기본 구분자, 숫자, 공백이 포함되어있을 때
-    if (customDelimiters.match(/[:,0-9\s]/)) throw new Error("4");
+    if (customDelimiters.match(/[:,0-9\s]/))
+      throw new Error(
+        "커스텀 구분자에는 기본구분자 또는 공백이 들어갈 수 없습니다."
+      );
 
     delimiters = [...delimiters, customDelimiters];
   }
   if (str.includes("/") && !customStr) {
-    if (!/^\/\//.test(str) || !str.includes("\\n")) throw new Error("5");
+    if (!/^\/\//.test(str) || !str.includes("\\n"))
+      throw new Error("커스텀 구분자 형식에 맞게 작성해주세요");
   }
   if (
     delimiters.some((d) => numbersPart.startsWith(d)) ||
     delimiters.some((d) => numbersPart.endsWith(d))
   ) {
     //숫자필드가 구분자로 시작하거나 끝날 때
-    throw new Error("1");
+    throw new Error("숫자 입력 필드가 구분자로 시작하거나 끝날 수 없습니다.");
   }
 
   const regex = new RegExp(delimiters.join("|"));
@@ -82,9 +70,10 @@ function calculator(str) {
   const numbers = numArray.map((n) => {
     const num = Number(n);
     //양수가 아닐 때
-    if (num <= 0) throw new Error("2");
+    if (num <= 0) throw new Error("양수만 입력 가능합니다.");
     //숫자문자열에 NaN이 검출 되었을 때
-    if (Number.isNaN(num)) throw Error("3");
+    if (Number.isNaN(num))
+      throw Error("구분자가 아닌 다른 문자는 사용할 수 없습니다.");
     return num;
   });
 
