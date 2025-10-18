@@ -24,6 +24,8 @@ class App {
   }
 }
 
-function calculator(str) {}
+function calculator(str) {
+  if (!str) return 0;
+}
 
 export default App;
