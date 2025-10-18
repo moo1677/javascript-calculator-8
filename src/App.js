@@ -25,7 +25,18 @@ class App {
 }
 
 function calculator(str) {
+  //공백 입력 시 0 출력
   if (!str) return 0;
+
+  //구분자 배열
+  let delimiters = [":", ";"];
+  let numbersPart = str;
+
+  const regex = new RegExp(delimiters.join("|"));
+  const numArray = numbersPart.split(regex);
+
+  // reduce((누적값,현재값)=>{누적값 + 현재값})
+  return numArray.reduce((sum, n) => sum + n);
 }
 
 export default App;
