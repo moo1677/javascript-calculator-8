@@ -19,7 +19,7 @@ class App {
       const result = calculator(str);
       Console.print(`결과 : ${result}`);
     } catch (error) {
-      if (error === 1) {
+      if (error.message === "1") {
         Console.print("숫자 입력 필드가 구분자로 시작하거나 끝날 수 없습니다.");
       }
       throw new Error("[ERROR]");
@@ -52,7 +52,7 @@ function calculator(str) {
     delimiters.some((d) => numbersPart.startsWith(d)) ||
     delimiters.some((d) => numbersPart.endsWith(d))
   ) {
-    throw new Error(1);
+    throw new Error("1");
   }
 
   const regex = new RegExp(delimiters.join("|"));
