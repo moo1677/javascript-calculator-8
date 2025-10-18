@@ -31,6 +31,19 @@ function calculator(str) {
   //구분자 배열
   let delimiters = [":", ";"];
   let numbersPart = str;
+  //커스텀 구분자 형식 지정
+  // ^문자 : 앞에 해당 문자가 와야함
+  // [^문자] : 대괄호 안에 문자는 부정
+  // 패턴+ : 해당 패턴이 1개 이상
+  // ([^:,]+) : :와,를 제외한 문자가 1개 이상 연속된 덩어리
+  // \\n(.*)$ : 문자열이 \n으로 끝나지 않음
+  let customStr = str.match(/^\/\/([^,:]+)\\n(.*)$/);
+
+  if (customStr) {
+    const customDelimiters = customStr[1];
+    numbersPart = customStr[2];
+    delimiters = [...delimiters, customDelimiters];
+  }
 
   const regex = new RegExp(delimiters.join("|"));
   const numArray = numbersPart.split(regex);
@@ -41,7 +54,7 @@ function calculator(str) {
     return num;
   });
 
-  // reduce((누적값,현재값)=>{누적값 + 현재값})
+  //reduce((누적값,현재값)=>{누적값 + 현재값})
   return numbers.reduce((sum, n) => sum + n);
 }
 
