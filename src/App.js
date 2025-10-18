@@ -1,7 +1,7 @@
 // 에러로 처리할 항목
-// 1. numbersPart가 구분자로 시작하거나 끝날 때
-// 2. 숫자가 양수가 아닐 경우
-// 3. 커스텀 구분자와 기본 구분자가 아닌 다른 문자가 사용 되었을 때
+// 1. numbersPart가 구분자로 시작하거나 끝날 때   o
+// 2. 숫자가 양수가 아닐 경우                   o
+// 3. 커스텀 구분자와 기본 구분자가 아닌 다른 문자가 사용 되었을 때 o
 // 4. // 와 \n 사이에 ":" 또는 "," 또는 숫자 또는 공백이 왔을 때
 // 5. 커스텀 구분자 기본 형식이 틀렸을 때
 
@@ -24,6 +24,9 @@ class App {
       }
       if (error.message === "2") {
         Console.print("양수만 입력 가능합니다.");
+      }
+      if (error.message === "2") {
+        Console.print("구분자가 아닌 다른 문자는 사용할 수 없습니다.");
       }
       throw new Error("[ERROR]");
     }
@@ -62,11 +65,13 @@ function calculator(str) {
   const regex = new RegExp(delimiters.join("|"));
   const numArray = numbersPart.split(regex);
 
-  //문자열을 숫자로 변환
+  //숫자문자열을 숫자로 변환
   const numbers = numArray.map((n) => {
     const num = Number(n);
     //양수가 아닐 때
     if (num <= 0) throw new Error("2");
+    //숫자문자열에 NaN이 검출 되었을 때
+    if (!Number.isNaN(num)) throw Error("3");
     return num;
   });
 
