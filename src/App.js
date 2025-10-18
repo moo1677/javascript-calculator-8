@@ -28,6 +28,11 @@ class App {
       if (error.message === "3") {
         Console.print("구분자가 아닌 다른 문자는 사용할 수 없습니다.");
       }
+      if (error.message === "4") {
+        Console.print(
+          "커스텀 구분자에는 기본구분자 또는 공백이 들어갈 수 없습니다."
+        );
+      }
       throw new Error("[ERROR]");
     }
   }
@@ -51,7 +56,8 @@ function calculator(str) {
   if (customStr) {
     const customDelimiters = customStr[1];
     numbersPart = customStr[2];
-
+    //커스텀 구분자에 기본 구분자, 숫자, 공백이 포함되어있을 때
+    if (customDelimiters.match(/[:,0-9\s]/)) throw new Error("4");
     delimiters = [...delimiters, customDelimiters];
   }
   if (
