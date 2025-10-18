@@ -33,6 +33,9 @@ class App {
           "커스텀 구분자에는 기본구분자 또는 공백이 들어갈 수 없습니다."
         );
       }
+      if (error.message === "5") {
+        Console.print("커스텀 구분자 형식에 맞게 작성해주세요");
+      }
       throw new Error("[ERROR]");
     }
   }
@@ -43,7 +46,7 @@ function calculator(str) {
   if (!str) return 0;
 
   //구분자 배열
-  let delimiters = [":", ";"];
+  let delimiters = [":", ","];
   let numbersPart = str;
   //커스텀 구분자 형식 지정
   // ^문자 : 앞에 해당 문자가 와야함
@@ -58,7 +61,11 @@ function calculator(str) {
     numbersPart = customStr[2];
     //커스텀 구분자에 기본 구분자, 숫자, 공백이 포함되어있을 때
     if (customDelimiters.match(/[:,0-9\s]/)) throw new Error("4");
+
     delimiters = [...delimiters, customDelimiters];
+  }
+  if (str.includes("/") && !customStr) {
+    if (!/^\/\//.test(str) || !str.includes("\\n")) throw new Error("5");
   }
   if (
     delimiters.some((d) => numbersPart.startsWith(d)) ||
@@ -77,7 +84,7 @@ function calculator(str) {
     //양수가 아닐 때
     if (num <= 0) throw new Error("2");
     //숫자문자열에 NaN이 검출 되었을 때
-    if (!Number.isNaN(num)) throw Error("3");
+    if (Number.isNaN(num)) throw Error("3");
     return num;
   });
 
