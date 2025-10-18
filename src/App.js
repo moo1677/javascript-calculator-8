@@ -22,6 +22,9 @@ class App {
       if (error.message === "1") {
         Console.print("숫자 입력 필드가 구분자로 시작하거나 끝날 수 없습니다.");
       }
+      if (error.message === "2") {
+        Console.print("양수만 입력 가능합니다.");
+      }
       throw new Error("[ERROR]");
     }
   }
@@ -52,6 +55,7 @@ function calculator(str) {
     delimiters.some((d) => numbersPart.startsWith(d)) ||
     delimiters.some((d) => numbersPart.endsWith(d))
   ) {
+    //숫자필드가 구분자로 시작하거나 끝날 때
     throw new Error("1");
   }
 
@@ -61,6 +65,8 @@ function calculator(str) {
   //문자열을 숫자로 변환
   const numbers = numArray.map((n) => {
     const num = Number(n);
+    //양수가 아닐 때
+    if (num <= 0) throw new Error("2");
     return num;
   });
 
