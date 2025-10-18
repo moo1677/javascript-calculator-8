@@ -25,7 +25,7 @@ class App {
       if (error.message === "2") {
         Console.print("양수만 입력 가능합니다.");
       }
-      if (error.message === "2") {
+      if (error.message === "3") {
         Console.print("구분자가 아닌 다른 문자는 사용할 수 없습니다.");
       }
       throw new Error("[ERROR]");
