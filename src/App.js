@@ -18,7 +18,10 @@ class App {
       let str = await Console.readLineAsync("덧셈할 문자열을 입력해 주세요.");
       const result = calculator(str);
       Console.print(`결과 : ${result}`);
-    } catch {
+    } catch (error) {
+      if (error === 1) {
+        Console.print("숫자 입력 필드가 구분자로 시작하거나 끝날 수 없습니다.");
+      }
       throw new Error("[ERROR]");
     }
   }
@@ -42,7 +45,14 @@ function calculator(str) {
   if (customStr) {
     const customDelimiters = customStr[1];
     numbersPart = customStr[2];
+
     delimiters = [...delimiters, customDelimiters];
+  }
+  if (
+    delimiters.some((d) => numbersPart.startsWith(d)) ||
+    delimiters.some((d) => numbersPart.endsWith(d))
+  ) {
+    throw new Error(1);
   }
 
   const regex = new RegExp(delimiters.join("|"));
