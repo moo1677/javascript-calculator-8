@@ -35,8 +35,14 @@ function calculator(str) {
   const regex = new RegExp(delimiters.join("|"));
   const numArray = numbersPart.split(regex);
 
+  //문자열을 숫자로 변환
+  const numbers = numArray.map((n) => {
+    const num = Number(n);
+    return num;
+  });
+
   // reduce((누적값,현재값)=>{누적값 + 현재값})
-  return numArray.reduce((sum, n) => sum + n);
+  return numbers.reduce((sum, n) => sum + n);
 }
 
 export default App;
